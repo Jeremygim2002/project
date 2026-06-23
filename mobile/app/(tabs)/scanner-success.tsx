@@ -9,7 +9,7 @@ import { TabsHeader } from '@/components/tabs-header';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import {
-  clearPendingPurchaseValidation,
+  clearPendingScannerFlow,
   clonePurchaseValidationWithNewTransaction,
   getPendingPurchaseValidation,
 } from '@/services/extracted-document-store';
@@ -36,7 +36,7 @@ export default function ScannerSuccessScreen() {
     try {
       setIsSaving(true);
       const response = await savePurchaseValidation(clonePurchaseValidationWithNewTransaction(validation));
-      clearPendingPurchaseValidation();
+      clearPendingScannerFlow();
       Alert.alert('Guardado', `Comprobante guardado en BigQuery: ${response.transactionId}`);
       router.replace('/(tabs)' as never);
     } catch (error) {
@@ -98,7 +98,10 @@ export default function ScannerSuccessScreen() {
             label="Volver al Inicio"
             variant="secondary"
             icon={<Ionicons name="home-outline" size={18} color="#0f172a" />}
-            onPress={() => router.replace('/(tabs)' as never)}
+            onPress={() => {
+              clearPendingScannerFlow();
+              router.replace('/(tabs)' as never);
+            }}
             style={styles.secondaryButton}
           />
         </ScrollView>

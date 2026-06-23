@@ -1,5 +1,4 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';

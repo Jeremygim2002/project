@@ -11,8 +11,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { extractInvoiceDocument } from '@/services/documents';
 import {
-  clearPendingExtractedDocument,
-  clearPendingPurchaseValidation,
+  clearPendingScannerFlow,
   setPendingExtractedDocument,
 } from '@/services/extracted-document-store';
 
@@ -39,13 +38,13 @@ export default function UploadScreen() {
         return;
       }
 
-      clearPendingExtractedDocument();
-      clearPendingPurchaseValidation();
+      clearPendingScannerFlow();
       setIsProcessing(true);
       const extractedDocument = await extractInvoiceDocument(asset);
       setPendingExtractedDocument(extractedDocument);
       router.push('/scanner-form');
     } catch (error) {
+      clearPendingScannerFlow();
       Alert.alert('No se pudo procesar', getErrorMessage(error));
     } finally {
       setIsProcessing(false);

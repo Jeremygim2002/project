@@ -73,10 +73,14 @@ export default function OAuthRedirectScreen() {
         );
         const userCredential = await signInWithCredential(auth, credential);
         const firebaseIdToken = await getIdToken(userCredential.user);
-        await loginWithFirebaseToken(firebaseIdToken);
+        const loginResponse = await loginWithFirebaseToken(firebaseIdToken);
 
         clearPendingGoogleAuthSession();
-        router.replace('/(auth)/login-success' as never);
+        if (loginResponse.user.mypeId && loginResponse.user.rol) {
+          router.replace('/(tabs)' as never);
+        } else {
+          router.replace('/(auth)/company-choice' as never);
+        }
       } catch (error: unknown) {
         clearPendingGoogleAuthSession();
         setErrorMessage(String(error));

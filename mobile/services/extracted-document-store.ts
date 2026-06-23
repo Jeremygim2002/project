@@ -71,6 +71,12 @@ export function clearPendingPurchaseValidation() {
   pendingPurchaseValidation = null;
 }
 
+export function clearPendingScannerFlow() {
+  pendingExtractedDocument = null;
+  pendingExtractedDocumentId += 1;
+  pendingPurchaseValidation = null;
+}
+
 export function createPurchaseTransactionId() {
   return `TXN-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
 }

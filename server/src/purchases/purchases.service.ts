@@ -19,6 +19,7 @@ type AuthenticatedUser = {
   uid: string;
   email: string;
   name: string;
+  mypeId?: string | null;
 };
 
 type FactCompraRow = {
@@ -406,7 +407,7 @@ export class PurchasesService implements OnModuleInit {
     return items.map((item) => ({
       transaccion_id: transactionId,
       usuario_id: user.uid,
-      mype_id: null,
+      mype_id: user.mypeId ?? null,
       sede_id: null,
       sede_nombre: this.emptyToNull(dto.document.sedeNombre),
       ubicacion: this.emptyToNull(dto.document.ubicacion),

@@ -7,13 +7,28 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TabsHeader } from '@/components/tabs-header';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { getCurrentUserProfile, getFirstName, logout } from '@/services/auth';
+import {
+  getCurrentUserProfile,
+  getFirstName,
+  logout,
+  type MypeProfile,
+} from '@/services/auth';
+import { type SessionRole } from '@/services/session';
+
+type ProfileState = {
+  email: string;
+  name: string;
+  role: SessionRole | null;
+  mype: MypeProfile | null;
+};
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<ProfileState>({
     email: '',
     name: 'Usuario',
+    role: null,
+    mype: null,
   });
 
   useEffect(() => {
@@ -26,6 +41,8 @@ export default function ProfileScreen() {
           setProfile({
             email: userProfile.email,
             name: getFirstName(userProfile.name),
+            role: userProfile.rol,
+            mype: userProfile.mype,
           });
         }
       } catch {
@@ -33,6 +50,8 @@ export default function ProfileScreen() {
           setProfile({
             email: '',
             name: 'Usuario',
+            role: null,
+            mype: null,
           });
         }
       }
@@ -100,31 +119,61 @@ export default function ProfileScreen() {
             </ThemedText>
           </View>
 
-          <ThemedView type="backgroundElement" style={styles.listCard}>
-            {profileItems.map((item) => (
-              <Pressable key={item.title} style={styles.listRow}>
-                <View style={styles.rowIcon}>
-                  <Ionicons name={item.icon} size={18} color="#0b3b78" />
-                </View>
-                <View style={styles.rowBody}>
-                  <ThemedText style={styles.rowTitle}>{item.title}</ThemedText>
-                  <ThemedText themeColor="textSecondary" style={styles.rowSubtitle}>
-                    {item.subtitle}
-                  </ThemedText>
-                </View>
-                <Ionicons name="chevron-forward" size={16} color="#94a3b8" />
-              </Pressable>
-            ))}
+          <ThemedView type="backgroundElement" style={styles.companyCard}>
+            <View style={styles.companyHeader}>
+              <View style={styles.companyIcon}>
+                <Ionicons name="business-outline" size={20} color="#0b3b78" />
+              </View>
+              <View style={styles.companyHeaderText}>
+                <ThemedText style={styles.companyTitle}>Empresa</ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.companySubtitle}>
+                  Datos asociados a tu cuenta
+                </ThemedText>
+              </View>
+            </View>
+
+            <View style={styles.companyDetails}>
+              <DetailRow label="RUC" value={profile.mype?.ruc ?? '-'} />
+              <DetailRow
+                label="Razon social"
+                value={profile.mype?.razonSocial ?? '-'}
+              />
+              <DetailRow label="Ubicacion" value={profile.mype?.distrito ?? '-'} />
+              <DetailRow label="Rol" value={formatRole(profile.role)} />
+            </View>
           </ThemedView>
 
           <Pressable style={styles.logoutButton} onPress={() => void handleLogout()}>
             <Ionicons name="log-out-outline" size={18} color="#0b3b78" />
-            <ThemedText style={styles.logoutText}>Cerrar sesión</ThemedText>
+            <ThemedText style={styles.logoutText}>Cerrar sesion</ThemedText>
           </Pressable>
         </ScrollView>
       </SafeAreaView>
     </ThemedView>
   );
+}
+
+function DetailRow({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.detailRow}>
+      <ThemedText themeColor="textSecondary" style={styles.detailLabel}>
+        {label}
+      </ThemedText>
+      <ThemedText style={styles.detailValue}>{value}</ThemedText>
+    </View>
+  );
+}
+
+function formatRole(role: SessionRole | null) {
+  if (role === 'ADMIN') {
+    return 'Administrador';
+  }
+
+  if (role === 'USER') {
+    return 'Empleado';
+  }
+
+  return '-';
 }
 
 const styles = StyleSheet.create({
@@ -210,40 +259,61 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#111827',
   },
-  listCard: {
+  companyCard: {
     borderRadius: 16,
     borderWidth: 1,
     borderColor: '#eef2f7',
-    overflow: 'hidden',
+    padding: 16,
   },
-  listRow: {
+  companyHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eef2f7',
+    gap: 12,
   },
-  rowIcon: {
-    width: 36,
-    height: 36,
+  companyIcon: {
+    width: 42,
+    height: 42,
     borderRadius: 12,
     backgroundColor: '#eaf2ff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
   },
-  rowBody: {
+  companyHeaderText: {
     flex: 1,
   },
-  rowTitle: {
-    fontSize: 14,
-    fontWeight: '700',
+  companyTitle: {
+    fontSize: 16,
+    fontWeight: '800',
     color: '#111827',
   },
-  rowSubtitle: {
+  companySubtitle: {
     marginTop: 2,
     fontSize: 12,
+  },
+  companyDetails: {
+    borderTopWidth: 1,
+    borderTopColor: '#eef2f7',
+    gap: 12,
+    marginTop: 16,
+    paddingTop: 16,
+  },
+  detailRow: {
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'space-between',
+  },
+  detailLabel: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  detailValue: {
+    color: '#111827',
+    flex: 1.4,
+    fontSize: 13,
+    fontWeight: '800',
+    lineHeight: 18,
+    textAlign: 'right',
   },
   logoutButton: {
     marginTop: 18,
@@ -264,11 +334,3 @@ const styles = StyleSheet.create({
     color: '#0b3b78',
   },
 });
-
-const profileItems = [
-  {
-    title: 'Empresa',
-    subtitle: 'RUC, actividad y direccion',
-    icon: 'briefcase-outline' as const,
-  }
-];

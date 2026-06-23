@@ -9,6 +9,7 @@ import { TabsHeader } from '@/components/tabs-header';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { getCurrentUserProfile, getFirstName } from '@/services/auth';
+import { clearPendingScannerFlow } from '@/services/extracted-document-store';
 import {
   formatMoney,
   getProviderName,
@@ -49,6 +50,7 @@ export default function HomeTabScreen() {
   useFocusEffect(
     useCallback(() => {
       let isMounted = true;
+      clearPendingScannerFlow();
 
       const loadDashboard = async () => {
         try {
