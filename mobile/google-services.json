@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "304143719817",
-    "project_id": "fazil-11f23",
-    "storage_bucket": "fazil-11f23.firebasestorage.app"
+    "project_number": "226954655562",
+    "project_id": "fazil-d5640",
+    "storage_bucket": "fazil-d5640.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:304143719817:android:165f62f7bb684b019b1558",
+        "mobilesdk_app_id": "1:226954655562:android:1380ae97df203038b173b3",
         "android_client_info": {
           "package_name": "com.fazil.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "304143719817-tsjg9dsgmrpj3279vj182709rae423us.apps.googleusercontent.com",
+          "client_id": "226954655562-ev908okd6ugvmlihatihsohig5jopppj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fazil.app",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "304143719817-9f3u23gduv3pd5rutusn4chea9db794v.apps.googleusercontent.com",
+          "client_id": "226954655562-70ktmfq25qd0d0j786oedkl9dpsd9flk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB0I3cWKGBXzoiyQatNmTtpMyCXY8tAA3I"
+          "current_key": "AIzaSyCrRCre73Z2GVYygz_BmTgP11lSmFJBEHA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "304143719817-9f3u23gduv3pd5rutusn4chea9db794v.apps.googleusercontent.com",
+              "client_id": "226954655562-70ktmfq25qd0d0j786oedkl9dpsd9flk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

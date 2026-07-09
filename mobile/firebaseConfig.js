@@ -3,12 +3,12 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC8pIRW5AuZUmavm3NciJVXNP6TmFnDiZQ",
-  authDomain: "fazil-11f23.firebaseapp.com",
-  projectId: "fazil-11f23",
-  storageBucket: "fazil-11f23.firebasestorage.app",
-  messagingSenderId: "304143719817",
-  appId: "1:304143719817:web:3e722ad39ebb30169b1558"
+  apiKey: "AIzaSyCBcQR6CiZaDsuQMHPyxyGGOFDTHUGhPoE",
+  authDomain: "fazil-d5640.firebaseapp.com",
+  projectId: "fazil-d5640",
+  storageBucket: "fazil-d5640.firebasestorage.app",
+  messagingSenderId: "226954655562",
+  appId: "1:226954655562:web:e316c4ce940be22bb173b3"
 };
 
 export const app = initializeApp(firebaseConfig);
