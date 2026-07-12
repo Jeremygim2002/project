@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -47,8 +47,6 @@ export default function AnalyticsScreen() {
   const totalComprobantes = (summary?.validados ?? 0) + (summary?.observados ?? 0);
   const validadoPct = getPercent(summary?.validados ?? 0, totalComprobantes);
   const observadoPct = getPercent(summary?.observados ?? 0, totalComprobantes);
-  const pendientePct = Math.max(0, 100 - validadoPct - observadoPct);
-  const bars = useMemo(() => buildBars(dashboard), [dashboard]);
 
   return (
     <ThemedView style={styles.safeArea}>
@@ -56,36 +54,21 @@ export default function AnalyticsScreen() {
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <TabsHeader />
 
-          <View style={styles.kpiRow}>
+          <View style={styles.kpiGrid}>
             <KpiCard title="TOTAL MES" value={formatCompactMoney(summary?.totalMes)} />
             <KpiCard title="PROMEDIO" value={formatCompactMoney(summary?.promedioComprobante)} />
+            <KpiCard title="COMPROBANTES" value={String(summary?.comprobantesMes ?? 0)} />
+            <KpiCard title="DETRACCION" value={formatMoney(summary?.detraccionPendiente)} />
           </View>
-
-          <ThemedView type="backgroundElement" style={styles.chartCard}>
-            <View style={styles.chartHeader}>
-              <ThemedText type="smallBold" style={styles.sectionTitle}>
-                Flujo de comprobantes
-              </ThemedText>
-              <View style={styles.chartPill}>
-                <ThemedText style={styles.chartPillText}>Ultimos registros</ThemedText>
-              </View>
-            </View>
-            <View style={styles.chartPlaceholder}>
-              {bars.map((height, index) => (
-                <View key={`${height}-${index}`} style={[styles.chartBar, { height }]} />
-              ))}
-            </View>
-          </ThemedView>
 
           <View style={styles.sectionHeader}>
             <ThemedText type="smallBold" style={styles.sectionTitle}>
-              Distribucion
+              Distribucion de estados
             </ThemedText>
           </View>
 
           <ThemedView type="backgroundElement" style={styles.splitCard}>
             <SplitRow label="Validados" value={`${validadoPct}%`} color="#0b3b78" />
-            <SplitRow label="Pendientes" value={`${pendientePct}%`} color="#f97316" />
             <SplitRow label="Observados" value={`${observadoPct}%`} color="#94a3b8" />
           </ThemedView>
 
@@ -163,14 +146,6 @@ function getPercent(value: number, total: number) {
   return Math.round((value / total) * 100);
 }
 
-function buildBars(dashboard: PurchaseDashboard | null) {
-  const values = (dashboard?.history ?? []).slice(0, 6).map((record) => record.importeTotal);
-  const maxValue = Math.max(...values, 1);
-  const bars = values.map((value) => Math.max(24, Math.round((value / maxValue) * 92)));
-
-  return bars.length > 0 ? bars : [36, 52, 28, 72, 44, 60];
-}
-
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -183,43 +158,14 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 32,
   },
-  hero: {
-    marginTop: 8,
-  },
-  title: {
-    fontSize: 28,
-    lineHeight: 34,
-    fontWeight: '800',
-    color: '#111827',
-  },
-  subtitle: {
-    marginTop: 6,
-    fontSize: 16,
-    lineHeight: 22,
-  },
-  bigQueryButton: {
-    marginTop: 16,
-    minHeight: 48,
-    borderRadius: 14,
-    backgroundColor: '#0b3b78',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingHorizontal: 14,
-  },
-  bigQueryButtonText: {
-    color: '#ffffff',
-    fontSize: 13,
-    fontWeight: '800',
-  },
-  kpiRow: {
+  kpiGrid: {
     marginTop: 18,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 12,
   },
   kpiCard: {
-    flex: 1,
+    width: '48%',
     minHeight: 116,
     borderRadius: 16,
     padding: 14,
@@ -236,49 +182,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#111827',
   },
-  chartCard: {
-    marginTop: 18,
-    borderRadius: 18,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#eef2f7',
-  },
-  chartHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   sectionTitle: {
     fontSize: 14,
     color: '#111827',
-  },
-  chartPill: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 999,
-    backgroundColor: '#eaf2ff',
-  },
-  chartPillText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: '#0b3b78',
-  },
-  chartPlaceholder: {
-    marginTop: 16,
-    height: 120,
-    borderRadius: 14,
-    backgroundColor: '#f8fafc',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    paddingHorizontal: 12,
-    paddingBottom: 12,
-  },
-  chartBar: {
-    width: 16,
-    borderRadius: 8,
-    backgroundColor: '#0b3b78',
-    opacity: 0.18,
   },
   sectionHeader: {
     marginTop: 18,
