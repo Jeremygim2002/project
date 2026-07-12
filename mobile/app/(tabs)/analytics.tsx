@@ -100,9 +100,9 @@ export default function AnalyticsScreen() {
               dashboard.topProviders.map((provider) => <ProviderRow key={provider.proveedorId} provider={provider} />)
             ) : (
               <View style={styles.emptyState}>
-                <ThemedText style={styles.emptyTitle}>Faltan datos</ThemedText>
+                <ThemedText style={styles.emptyTitle}>Sin datos</ThemedText>
                 <ThemedText themeColor="textSecondary" style={styles.emptyText}>
-                  Los proveedores apareceran cuando guardes comprobantes.
+                  Guarda comprobantes para ver proveedores.
                 </ThemedText>
               </View>
             )}
@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 18,
+    paddingTop: 8,
     paddingBottom: 32,
   },
   hero: {

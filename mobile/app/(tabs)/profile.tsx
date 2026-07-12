@@ -106,7 +106,7 @@ export default function ProfileScreen() {
               <View style={styles.companyHeaderText}>
                 <ThemedText style={styles.companyTitle}>Empresa</ThemedText>
                 <ThemedText themeColor="textSecondary" style={styles.companySubtitle}>
-                  Datos asociados a tu empresa
+                  Datos de tu empresa
                 </ThemedText>
               </View>
             </View>
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 18,
+    paddingTop: 8,
     paddingBottom: 32,
   },
   profileCard: {

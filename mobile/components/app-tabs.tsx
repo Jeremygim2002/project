@@ -13,39 +13,54 @@ export default function AppTabs() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.text,
+        tabBarActiveTintColor: '#ffffff',
         tabBarInactiveTintColor: colors.textSecondary,
+        tabBarActiveBackgroundColor: '#0b3b78',
+        tabBarItemStyle: {
+          marginHorizontal: 6,
+          marginVertical: 10,
+          borderRadius: 18,
+          paddingVertical: 6,
+          minWidth: 72,
+        },
         tabBarStyle: {
           backgroundColor: colors.background,
           borderTopColor: colors.backgroundElement,
-          height: 84,
+          height: 90,
           paddingTop: 8,
-          paddingBottom: 10,
+          paddingBottom: 12,
         },
         tabBarLabelStyle: {
           fontSize: 11,
-          fontWeight: '700',
+          fontWeight: '800',
+          marginBottom: 1,
         },
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Inicio',
-          tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
           title: 'Historial',
-          tabBarIcon: ({ color, size }) => <Ionicons name="time-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? 'time' : 'time-outline'} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Perfil',
-          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -56,7 +71,9 @@ export default function AppTabs() {
         name="analytics"
         options={{
           title: 'Analítica',
-          tabBarIcon: ({ color, size }) => <Ionicons name="bar-chart-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen name="scanner" options={{ href: null }} />

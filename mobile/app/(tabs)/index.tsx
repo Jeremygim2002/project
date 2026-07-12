@@ -121,9 +121,9 @@ export default function HomeTabScreen() {
               recent.map((item) => <ActivityRow key={item.transactionId} item={item} />)
             ) : (
               <ThemedView type="backgroundElement" style={styles.emptyCard}>
-                <ThemedText style={styles.emptyTitle}>Faltan datos</ThemedText>
+                <ThemedText style={styles.emptyTitle}>Sin actividad</ThemedText>
                 <ThemedText themeColor="textSecondary" style={styles.emptyText}>
-                  Sube tu primer comprobante para ver actividad reciente.
+                  Captura tu primera factura para empezar.
                 </ThemedText>
               </ThemedView>
             )}

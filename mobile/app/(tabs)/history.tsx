@@ -79,9 +79,9 @@ export default function HistoryScreen() {
             filteredHistory.map((row) => <HistoryRow key={row.transactionId} row={row} />)
           ) : (
             <View style={styles.emptyState}>
-              <ThemedText style={styles.emptyTitle}>Faltan datos</ThemedText>
+              <ThemedText style={styles.emptyTitle}>Sin comprobantes</ThemedText>
               <ThemedText themeColor="textSecondary" style={styles.emptyText}>
-                Aun no hay comprobantes para este filtro.
+                Aun no hay registros para este filtro.
               </ThemedText>
             </View>
           )}
@@ -119,7 +119,6 @@ function HistoryRow({ row }: { row: PurchaseDashboardRecord }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f5f7fb',
   },
   content: {
     paddingHorizontal: 18,

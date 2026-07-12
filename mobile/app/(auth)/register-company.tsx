@@ -16,8 +16,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { registerAdminCompany, type MypeProfile } from '@/services/auth';
 
+type RucProfile = 'natural' | 'juridica';
+
 export default function RegisterCompanyScreen() {
   const router = useRouter();
+  const [rucProfile, setRucProfile] = useState<RucProfile>('juridica');
   const [ruc, setRuc] = useState('');
   const [razonSocial, setRazonSocial] = useState('');
   const [distrito, setDistrito] = useState('');
@@ -61,6 +64,47 @@ export default function RegisterCompanyScreen() {
           <ThemedText style={styles.description}>
             Registra los datos principales de tu MYPE para activar tu cuenta como administrador.
           </ThemedText>
+
+          <View style={styles.profileSection}>
+            <ThemedText style={styles.fieldLabel}>Tipo de contribuyente</ThemedText>
+            <View style={styles.profileToggleRow}>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => setRucProfile('natural')}
+                style={[
+                  styles.profileChip,
+                  rucProfile === 'natural' && styles.profileChipActive,
+                ]}>
+                <ThemedText
+                  style={[
+                    styles.profileChipText,
+                    rucProfile === 'natural' && styles.profileChipTextActive,
+                  ]}>
+                  Persona natural
+                </ThemedText>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => setRucProfile('juridica')}
+                style={[
+                  styles.profileChip,
+                  rucProfile === 'juridica' && styles.profileChipActive,
+                ]}>
+                <ThemedText
+                  style={[
+                    styles.profileChipText,
+                    rucProfile === 'juridica' && styles.profileChipTextActive,
+                  ]}>
+                  Empresa
+                </ThemedText>
+              </Pressable>
+            </View>
+            <ThemedText style={styles.helperText}>
+              {rucProfile === 'natural'
+                ? 'RUC de 11 dígitos. Personas naturales: empieza con 10 y sigue con tu DNI.'
+                : 'RUC de 11 dígitos. Empresas: normalmente empieza con 20.'}
+            </ThemedText>
+          </View>
 
           {createdMype ? (
             <View style={styles.successBox}>
@@ -183,6 +227,43 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 22,
     marginTop: 10,
+  },
+  profileSection: {
+    marginTop: 26,
+  },
+  profileToggleRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 10,
+  },
+  profileChip: {
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderColor: '#dbe4f0',
+    borderRadius: 999,
+    borderWidth: 1,
+    flex: 1,
+    justifyContent: 'center',
+    minHeight: 44,
+    paddingHorizontal: 14,
+  },
+  profileChipActive: {
+    backgroundColor: '#0b3b78',
+    borderColor: '#0b3b78',
+  },
+  profileChipText: {
+    color: '#0f172a',
+    fontSize: 13,
+    fontWeight: '800',
+  },
+  profileChipTextActive: {
+    color: '#ffffff',
+  },
+  helperText: {
+    color: '#64748b',
+    fontSize: 13,
+    lineHeight: 19,
+    marginTop: 8,
   },
   form: {
     gap: 16,

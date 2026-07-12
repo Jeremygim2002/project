@@ -23,13 +23,13 @@ export default function CompanyChoiceScreen() {
           <RouteOption
             icon="business-outline"
             title="Crear nueva empresa"
-            description="Registra tu MYPE y genera un codigo para invitar a tu equipo."
+            description="Registra tu MYPE y genera un codigo."
             onPress={() => router.push('/(auth)/register-company' as never)}
           />
           <RouteOption
             icon="key-outline"
             title="Unirse a una empresa existente"
-            description="Ingresa el codigo de invitacion que te compartio un administrador."
+            description="Ingresa el codigo de tu administrador."
             onPress={() => router.push('/(auth)/join-company' as never)}
           />
         </View>
@@ -50,7 +50,10 @@ function RouteOption({
   onPress: () => void;
 }) {
   return (
-    <Pressable accessibilityRole="button" style={styles.option} onPress={onPress}>
+    <Pressable
+      accessibilityRole="button"
+      style={({ pressed }) => [styles.option, pressed && styles.optionPressed]}
+      onPress={onPress}>
       <View style={styles.optionIcon}>
         <Ionicons name={icon} size={24} color="#0b3b78" />
       </View>
@@ -118,13 +121,25 @@ const styles = StyleSheet.create({
   option: {
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    borderColor: '#e5e7eb',
+    borderColor: '#dbe4f0',
     borderRadius: 16,
     borderWidth: 1,
     flexDirection: 'row',
     gap: 14,
     minHeight: 112,
     padding: 16,
+    shadowColor: '#0f172a',
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 2,
+    borderLeftWidth: 4,
+    borderLeftColor: '#0b3b78',
+  },
+  optionPressed: {
+    backgroundColor: '#eff6ff',
+    borderColor: '#0b3b78',
+    transform: [{ scale: 0.99 }],
   },
   optionIcon: {
     alignItems: 'center',

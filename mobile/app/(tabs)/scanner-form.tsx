@@ -250,71 +250,135 @@ export default function ScannerFormScreen() {
             </View>
           </View>
 
+          {isRucLoading || rucError ? (
+            <View style={[styles.feedbackBanner, isRucLoading ? styles.feedbackBannerLoading : styles.feedbackBannerError]}>
+              <Ionicons
+                name={isRucLoading ? 'hourglass-outline' : 'alert-circle-outline'}
+                size={18}
+                color={isRucLoading ? '#1d4ed8' : '#b45309'}
+              />
+              <ThemedText style={[styles.feedbackText, isRucLoading ? styles.feedbackTextLoading : styles.feedbackTextError]}>
+                {isRucLoading ? 'Validando RUC con SUNAT...' : 'SUNAT no respondio. Reintenta.'}
+              </ThemedText>
+            </View>
+          ) : null}
+
           <View style={styles.form}>
-            <FormField label="RUC" placeholder="20100047218" value={ruc} onChangeText={setRuc} />
-            <FormField label="Numero de Factura" placeholder="E001-4589" value={invoiceNumber} onChangeText={setInvoiceNumber} />
-            <FormField
-              label="Fecha"
-              placeholder={currentDateValue}
-              icon="calendar-outline"
-              value={issueDate}
-              onChangeText={setIssueDate}
-            />
-            <View style={styles.gridRow}>
-              <View style={styles.gridItem}>
-                <FormField label="Sede" placeholder="LURIN" value={sedeNombre} onChangeText={setSedeNombre} />
+            <ThemedView type="backgroundElement" style={styles.sectionCard}>
+              <View style={styles.sectionHeader}>
+                <ThemedText type="smallBold" style={styles.sectionTitle}>
+                  Documento
+                </ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.sectionSubtitle}>
+                  Identificacion y fecha
+                </ThemedText>
               </View>
-              <View style={styles.gridItem}>
-                <FormField label="Ubicacion" placeholder="Carretera Panamericana" value={ubicacion} onChangeText={setUbicacion} />
+              <View style={styles.sectionFields}>
+                <FormField label="RUC" placeholder="20100047218" value={ruc} onChangeText={setRuc} />
+                <FormField label="N° de Factura" placeholder="E001-4589" value={invoiceNumber} onChangeText={setInvoiceNumber} />
+                <FormField
+                  label="Fecha"
+                  placeholder={currentDateValue}
+                  icon="calendar-outline"
+                  value={issueDate}
+                  onChangeText={setIssueDate}
+                />
               </View>
-            </View>
+            </ThemedView>
 
-            <View style={styles.gridRow}>
-              <View style={styles.gridItem}>
-                <FormField label="Subtotal" placeholder="S/ 1,000.00" value={subtotal} onChangeText={setSubtotal} />
+            <ThemedView type="backgroundElement" style={styles.sectionCard}>
+              <View style={styles.sectionHeader}>
+                <ThemedText type="smallBold" style={styles.sectionTitle}>
+                  Datos de compra
+                </ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.sectionSubtitle}>
+                  Sede, ubicacion y montos
+                </ThemedText>
               </View>
-              <View style={styles.gridItem}>
-                <FormField label="IGV (18%)" placeholder="S/ 180.00" value={igv} onChangeText={setIgv} />
-              </View>
-            </View>
+              <View style={styles.sectionFields}>
+                <View style={styles.gridRow}>
+                  <View style={styles.gridItem}>
+                    <FormField label="Sede" placeholder="LURIN" value={sedeNombre} onChangeText={setSedeNombre} />
+                  </View>
+                  <View style={styles.gridItem}>
+                    <FormField label="Ubicación" placeholder="Carretera Panamericana" value={ubicacion} onChangeText={setUbicacion} />
+                  </View>
+                </View>
 
-            <View style={styles.gridRow}>
-              <View style={styles.gridItem}>
-                <FormField label="Total" placeholder="S/ 1,180.00" value={total} onChangeText={setTotal} />
+                <View style={styles.gridRow}>
+                  <View style={styles.gridItem}>
+                    <FormField label="Subtotal" placeholder="S/ 1,000.00" value={subtotal} onChangeText={setSubtotal} />
+                  </View>
+                  <View style={styles.gridItem}>
+                    <FormField label="IGV (18%)" placeholder="S/ 180.00" value={igv} onChangeText={setIgv} />
+                  </View>
+                </View>
+
+                <View style={styles.gridRow}>
+                  <View style={styles.gridItem}>
+                    <FormField label="Total" placeholder="S/ 1,180.00" value={total} onChangeText={setTotal} />
+                  </View>
+                  <View style={styles.gridItem}>
+                    <FormField label="% Detracción" placeholder="10%" value={detractionRate} onChangeText={setDetractionRate} />
+                  </View>
+                </View>
               </View>
-              <View style={styles.gridItem}>
-                <FormField label="% Detraccion" placeholder="10%" value={detractionRate} onChangeText={setDetractionRate} />
+            </ThemedView>
+
+            <ThemedView type="backgroundElement" style={styles.sectionCard}>
+              <View style={styles.sectionHeader}>
+                <ThemedText type="smallBold" style={styles.sectionTitle}>
+                  Detracción
+                </ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.sectionSubtitle}>
+                  Tipo y monto asociados
+                </ThemedText>
               </View>
-            </View>
-            <FormField
-              label="Monto de Detraccion"
-              placeholder="S/ 100.00"
-              value={detractionAmount}
-              onChangeText={setDetractionAmount}
-            />
-            <SelectField
-              label="Tipo de Detraccion"
-              value={selectedDetractionLabel}
-              placeholder="Selecciona un tipo"
-              onPress={() => setIsDetractionOpen(true)}
-            />
+              <View style={styles.sectionFields}>
+                <FormField
+                  label="Monto de detracción"
+                  placeholder="S/ 100.00"
+                  value={detractionAmount}
+                  onChangeText={setDetractionAmount}
+                />
+                <SelectField
+                  label="Tipo de detracción"
+                  value={selectedDetractionLabel}
+                  placeholder="Selecciona un tipo"
+                  onPress={() => setIsDetractionOpen(true)}
+                />
+              </View>
+            </ThemedView>
 
             <ThemedView type="backgroundElement" style={styles.summaryCard}>
+              <View style={styles.summaryHeader}>
+                <View>
+                  <ThemedText type="smallBold" style={styles.summaryTitle}>
+                    Resumen
+                  </ThemedText>
+                  <ThemedText themeColor="textSecondary" style={styles.summarySubtitle}>
+                    Totales principales de la factura
+                  </ThemedText>
+                </View>
+                <View style={styles.summaryBadge}>
+                  <ThemedText style={styles.summaryBadgeText}>LISTO</ThemedText>
+                </View>
+              </View>
               <View style={styles.summaryRow}>
                 <ThemedText themeColor="textSecondary" style={styles.summaryLabel}>
-                  Total de Factura:
+                  Total
                 </ThemedText>
                 <ThemedText style={styles.summaryValue}>{total || '-'}</ThemedText>
               </View>
               <View style={styles.summaryRow}>
                 <ThemedText themeColor="textSecondary" style={styles.summaryLabel}>
-                  Tasa de Detraccion:
+                  Tasa detracción
                 </ThemedText>
                 <ThemedText style={styles.summaryValue}>{detractionRate || '-'}</ThemedText>
               </View>
               <View style={styles.summaryRowStrong}>
                 <ThemedText themeColor="textSecondary" style={styles.summaryLabel}>
-                  Monto de Detraccion:
+                  Monto detracción
                 </ThemedText>
                 <ThemedText style={styles.summaryStrong}>{detractionAmount || '-'}</ThemedText>
               </View>
@@ -753,6 +817,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
+  feedbackBanner: {
+    marginTop: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  feedbackBannerLoading: {
+    backgroundColor: '#eff6ff',
+    borderColor: '#bfdbfe',
+  },
+  feedbackBannerError: {
+    backgroundColor: '#fff7ed',
+    borderColor: '#fed7aa',
+  },
+  feedbackText: {
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  feedbackTextLoading: {
+    color: '#1d4ed8',
+  },
+  feedbackTextError: {
+    color: '#b45309',
+  },
   statusChip: {
     flex: 1,
     borderRadius: 12,
@@ -808,6 +900,27 @@ const styles = StyleSheet.create({
     marginTop: 18,
     gap: 14,
   },
+  sectionCard: {
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    padding: 14,
+    gap: 12,
+  },
+  sectionHeader: {
+    gap: 3,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    color: '#111827',
+  },
+  sectionSubtitle: {
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  sectionFields: {
+    gap: 12,
+  },
   gridRow: {
     flexDirection: 'row',
     gap: 12,
@@ -816,17 +929,45 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   summaryCard: {
-    borderRadius: 14,
+    borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    padding: 14,
-    gap: 8,
+    borderColor: '#dbe4f0',
+    padding: 16,
+    gap: 10,
+    backgroundColor: '#f8fbff',
+  },
+  summaryHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  summaryTitle: {
+    fontSize: 14,
+    color: '#111827',
+  },
+  summarySubtitle: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 3,
+  },
+  summaryBadge: {
+    borderRadius: 999,
+    backgroundColor: '#0b3b78',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  summaryBadgeText: {
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.6,
   },
   itemsCard: {
-    borderRadius: 14,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: '#e5e7eb',
-    padding: 14,
+    padding: 16,
     gap: 10,
   },
   itemsTitle: {
