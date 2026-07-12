@@ -91,7 +91,7 @@ export default function HomeTabScreen() {
 
             <View style={styles.cardsRow}>
               <StatCard title="GASTOS DEL MES" value={formatMoney(summary?.totalMes)} />
-              <StatCard title="DETRACCION PENDIENTE" value={formatMoney(summary?.detraccionPendiente)} />
+              <StatCard title="DETRACCION" value={formatMoney(summary?.detraccionPendiente)} />
             </View>
           </View>
 

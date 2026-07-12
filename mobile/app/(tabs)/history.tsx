@@ -62,10 +62,6 @@ export default function HistoryScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <TabsHeader />
-        <ThemedText type="title" style={styles.pageTitle}>
-          Registros Internos
-        </ThemedText>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
           {filters.map((filter) => (
             <Pressable

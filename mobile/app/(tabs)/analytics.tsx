@@ -56,20 +56,6 @@ export default function AnalyticsScreen() {
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <TabsHeader />
 
-          <View style={styles.hero}>
-            <ThemedText type="title" style={styles.title}>
-              Analitica
-            </ThemedText>
-            <ThemedText themeColor="textSecondary" style={styles.subtitle}>
-              Indicadores clave y tendencias de tus comprobantes.
-            </ThemedText>
-          </View>
-
-          <Pressable style={styles.bigQueryButton}>
-            <Ionicons name="bar-chart-outline" size={18} color="#ffffff" />
-            <ThemedText style={styles.bigQueryButtonText}>Realizar dashboard en Looker Studio-</ThemedText>
-          </Pressable>
-
           <View style={styles.kpiRow}>
             <KpiCard title="TOTAL MES" value={formatCompactMoney(summary?.totalMes)} />
             <KpiCard title="PROMEDIO" value={formatCompactMoney(summary?.promedioComprobante)} />

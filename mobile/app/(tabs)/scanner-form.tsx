@@ -389,7 +389,7 @@ function evaluateValidation({
   const reasons: string[] = [];
 
   if (!detractionTypeId) {
-    reasons.push('Tipo de detraccion pendiente');
+    reasons.push('Tipo de detraccion');
   }
 
   const parsedDetractionRate = parseNumericInput(detractionRate);

@@ -92,30 +92,9 @@ export default function ProfileScreen() {
             </ThemedText>
           </ThemedView>
 
-          <View style={styles.statsRow}>
-            <ThemedView type="backgroundElement" style={styles.statCard}>
-              <ThemedText style={styles.statValue}>128</ThemedText>
-              <ThemedText themeColor="textSecondary" style={styles.statLabel}>
-                Comprobantes
-              </ThemedText>
-            </ThemedView>
-            <ThemedView type="backgroundElement" style={styles.statCard}>
-              <ThemedText style={styles.statValue}>94%</ThemedText>
-              <ThemedText themeColor="textSecondary" style={styles.statLabel}>
-                Validados
-              </ThemedText>
-            </ThemedView>
-            <ThemedView type="backgroundElement" style={styles.statCard}>
-              <ThemedText style={styles.statValue}>6</ThemedText>
-              <ThemedText themeColor="textSecondary" style={styles.statLabel}>
-                Pendientes
-              </ThemedText>
-            </ThemedView>
-          </View>
-
           <View style={styles.sectionHeader}>
             <ThemedText type="smallBold" style={styles.sectionTitle}>
-              Cuenta y Preferencias
+              Cuenta
             </ThemedText>
           </View>
 
@@ -127,7 +106,7 @@ export default function ProfileScreen() {
               <View style={styles.companyHeaderText}>
                 <ThemedText style={styles.companyTitle}>Empresa</ThemedText>
                 <ThemedText themeColor="textSecondary" style={styles.companySubtitle}>
-                  Datos asociados a tu cuenta
+                  Datos asociados a tu empresa
                 </ThemedText>
               </View>
             </View>
