@@ -14,8 +14,8 @@ export default function LoginScreen() {
   const androidClientId = process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID;
 
   const redirectUri = makeRedirectUri({
-    native: 'com.fazil.app:/oauthredirect',
-    scheme: 'com.fazil.app',
+    native: 'fazil:/oauthredirect',
+    scheme: 'fazil',
     path: 'oauthredirect',
   });
 
