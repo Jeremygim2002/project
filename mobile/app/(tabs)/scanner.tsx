@@ -1,12 +1,11 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFocusEffect } from '@react-navigation/native';
 import {
   CameraView,
   useCameraPermissions,
   type CameraCapturedPicture,
 } from 'expo-camera';
 import { useRouter } from 'expo-router';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -35,27 +34,11 @@ const MIN_IMAGE_SIDE = 900;
 export default function ScannerScreen() {
   const router = useRouter();
   const cameraRef = useRef<CameraView | null>(null);
-  const processingTokenRef = useRef(0);
   const [permission, requestPermission] = useCameraPermissions();
   const [step, setStep] = useState<CaptureStep>('camera');
   const [capturedPhoto, setCapturedPhoto] =
     useState<CameraCapturedPicture | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
-
-  useFocusEffect(
-    useCallback(() => {
-      setStep('camera');
-      setCapturedPhoto(null);
-      setIsCameraReady(false);
-      clearPendingScannerFlow();
-      processingTokenRef.current += 1;
-
-      return () => {
-        clearPendingScannerFlow();
-        processingTokenRef.current += 1;
-      };
-    }, []),
-  );
 
   const hasPermission = permission?.granted;
 
@@ -88,9 +71,6 @@ export default function ScannerScreen() {
       return;
     }
 
-    const processingToken = processingTokenRef.current + 1;
-    processingTokenRef.current = processingToken;
-
     try {
       clearPendingScannerFlow();
       setStep('processing');
@@ -100,17 +80,11 @@ export default function ScannerScreen() {
         mimeType: 'image/jpeg',
       });
 
-      if (processingTokenRef.current !== processingToken) {
-        return;
-      }
-
       setPendingExtractedDocument(extractedDocument);
-      router.push('/scanner-form' as never);
+      router.replace('/scanner-form' as never);
+      setCapturedPhoto(null);
+      setStep('camera');
     } catch (error) {
-      if (processingTokenRef.current !== processingToken) {
-        return;
-      }
-
       clearPendingScannerFlow();
       Alert.alert('No se pudo procesar', getErrorMessage(error));
       setStep('review');
@@ -118,7 +92,6 @@ export default function ScannerScreen() {
   };
 
   const handleRetake = () => {
-    processingTokenRef.current += 1;
     setCapturedPhoto(null);
     setStep('camera');
   };
