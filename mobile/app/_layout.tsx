@@ -1,10 +1,13 @@
 import { ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useColorScheme } from 'react-native';
 
 import { NAV_THEME } from '@/lib/theme';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();

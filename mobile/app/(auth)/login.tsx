@@ -1,21 +1,18 @@
 import { makeRedirectUri } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
-import * as WebBrowser from 'expo-web-browser';
 import { useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import { setPendingGoogleAuthSession } from '../../services/googleAuthSession';
 
-WebBrowser.maybeCompleteAuthSession();
-
 export default function LoginScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const androidClientId = process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID;
 
   const redirectUri = makeRedirectUri({
-    native: 'fazil:/oauthredirect',
-    scheme: 'fazil',
+    native: 'com.fazil.app:/oauthredirect',
+    scheme: 'com.fazil.app',
     path: 'oauthredirect',
   });
 
