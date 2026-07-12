@@ -16,11 +16,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { registerAdminCompany, type MypeProfile } from '@/services/auth';
 
-type RucProfile = 'natural' | 'juridica';
-
 export default function RegisterCompanyScreen() {
   const router = useRouter();
-  const [rucProfile, setRucProfile] = useState<RucProfile>('juridica');
   const [ruc, setRuc] = useState('');
   const [razonSocial, setRazonSocial] = useState('');
   const [distrito, setDistrito] = useState('');
@@ -52,59 +49,14 @@ export default function RegisterCompanyScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.keyboardView}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.keyboardView}>
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={20} color="#0b3b78" />
           </Pressable>
 
           <ThemedText style={styles.title}>Crear nueva empresa</ThemedText>
-          <ThemedText style={styles.description}>
-            Registra los datos principales de tu MYPE para activar tu cuenta como administrador.
-          </ThemedText>
-
-          <View style={styles.profileSection}>
-            <ThemedText style={styles.fieldLabel}>Tipo de contribuyente</ThemedText>
-            <View style={styles.profileToggleRow}>
-              <Pressable
-                accessibilityRole="button"
-                onPress={() => setRucProfile('natural')}
-                style={[
-                  styles.profileChip,
-                  rucProfile === 'natural' && styles.profileChipActive,
-                ]}>
-                <ThemedText
-                  style={[
-                    styles.profileChipText,
-                    rucProfile === 'natural' && styles.profileChipTextActive,
-                  ]}>
-                  Persona natural
-                </ThemedText>
-              </Pressable>
-              <Pressable
-                accessibilityRole="button"
-                onPress={() => setRucProfile('juridica')}
-                style={[
-                  styles.profileChip,
-                  rucProfile === 'juridica' && styles.profileChipActive,
-                ]}>
-                <ThemedText
-                  style={[
-                    styles.profileChipText,
-                    rucProfile === 'juridica' && styles.profileChipTextActive,
-                  ]}>
-                  Empresa
-                </ThemedText>
-              </Pressable>
-            </View>
-            <ThemedText style={styles.helperText}>
-              {rucProfile === 'natural'
-                ? 'RUC de 11 dígitos. Personas naturales: empieza con 10 y sigue con tu DNI.'
-                : 'RUC de 11 dígitos. Empresas: normalmente empieza con 20.'}
-            </ThemedText>
-          </View>
+          <ThemedText style={styles.description}>Completa los datos para crear tu empresa.</ThemedText>
 
           {createdMype ? (
             <View style={styles.successBox}>
@@ -112,9 +64,7 @@ export default function RegisterCompanyScreen() {
                 <Ionicons name="checkmark" size={30} color="#166534" />
               </View>
               <ThemedText style={styles.successTitle}>Empresa creada</ThemedText>
-              <ThemedText style={styles.successText}>
-                Comparte este codigo con los empleados que quieras unir a tu empresa.
-              </ThemedText>
+              <ThemedText style={styles.successText}>Comparte este codigo con tu equipo.</ThemedText>
               <View style={styles.codeBox}>
                 <ThemedText style={styles.code}>{createdMype.codigoInvitacion}</ThemedText>
               </View>
@@ -132,25 +82,13 @@ export default function RegisterCompanyScreen() {
                 keyboardType="number-pad"
                 maxLength={11}
               />
-              <InputField
-                label="Razon social"
-                value={razonSocial}
-                onChangeText={setRazonSocial}
-                placeholder="Mi empresa SAC"
-              />
-              <InputField
-                label="Distrito"
-                value={distrito}
-                onChangeText={setDistrito}
-                placeholder="Miraflores"
-              />
-              <Pressable
-                disabled={isSubmitting}
-                style={[styles.primaryButton, isSubmitting && styles.disabledButton]}
-                onPress={() => void handleSubmit()}>
-                <ThemedText style={styles.primaryButtonText}>
-                  {isSubmitting ? 'Creando...' : 'Crear empresa'}
-                </ThemedText>
+              <ThemedText themeColor="textSecondary" style={styles.helperText}>
+                El RUC debe contener 11 digitos.
+              </ThemedText>
+              <InputField label="Razon social" value={razonSocial} onChangeText={setRazonSocial} placeholder="Mi empresa SAC" />
+              <InputField label="Distrito" value={distrito} onChangeText={setDistrito} placeholder="Miraflores" />
+              <Pressable disabled={isSubmitting} style={[styles.primaryButton, isSubmitting && styles.disabledButton]} onPress={() => void handleSubmit()}>
+                <ThemedText style={styles.primaryButtonText}>{isSubmitting ? 'Creando...' : 'Crear empresa'}</ThemedText>
               </Pressable>
             </View>
           )}
@@ -228,42 +166,12 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginTop: 10,
   },
-  profileSection: {
-    marginTop: 26,
-  },
-  profileToggleRow: {
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 10,
-  },
-  profileChip: {
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-    borderColor: '#dbe4f0',
-    borderRadius: 999,
-    borderWidth: 1,
-    flex: 1,
-    justifyContent: 'center',
-    minHeight: 44,
-    paddingHorizontal: 14,
-  },
-  profileChipActive: {
-    backgroundColor: '#0b3b78',
-    borderColor: '#0b3b78',
-  },
-  profileChipText: {
-    color: '#0f172a',
-    fontSize: 13,
-    fontWeight: '800',
-  },
-  profileChipTextActive: {
-    color: '#ffffff',
-  },
   helperText: {
     color: '#64748b',
     fontSize: 13,
     lineHeight: 19,
-    marginTop: 8,
+    marginTop: -4,
+    marginBottom: 2,
   },
   form: {
     gap: 16,

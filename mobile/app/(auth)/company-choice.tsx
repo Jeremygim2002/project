@@ -15,7 +15,7 @@ export default function CompanyChoiceScreen() {
           <TextBadge label="Fazil" />
           <ThemedText style={styles.title}>Configura tu empresa</ThemedText>
           <ThemedText style={styles.description}>
-            Elige como quieres asociar tu cuenta para empezar a registrar comprobantes.
+            Elige una opcion para continuar.
           </ThemedText>
         </View>
 
@@ -23,13 +23,13 @@ export default function CompanyChoiceScreen() {
           <RouteOption
             icon="business-outline"
             title="Crear nueva empresa"
-            description="Registra tu MYPE y genera un codigo."
+            description="Crear tu empresa y seguir."
             onPress={() => router.push('/(auth)/register-company' as never)}
           />
           <RouteOption
             icon="key-outline"
             title="Unirse a una empresa existente"
-            description="Ingresa el codigo de tu administrador."
+            description="Usar el codigo de tu equipo."
             onPress={() => router.push('/(auth)/join-company' as never)}
           />
         </View>
