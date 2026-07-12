@@ -11,6 +11,13 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://fazil-api-226954655562.us-central1.run.app",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "226954655562-70ktmfq25qd0d0j786oedkl9dpsd9flk.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "226954655562-ev908okd6ugvmlihatihsohig5jopppj.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID": "226954655562-70ktmfq25qd0d0j786oedkl9dpsd9flk.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "226954655562-70ktmfq25qd0d0j786oedkl9dpsd9flk.apps.googleusercontent.com"
       }
     },
     "production": {}
